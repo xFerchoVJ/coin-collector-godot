@@ -13,7 +13,7 @@
 | T04 | Movimiento top-down con Input Map | M1 | Completed | XFE-8 |
 | T05 | Animaciones idle y walk | M1 | Completed | XFE-9 |
 | T06 | TileSet y pintar la habitación | M2 | Completed | XFE-10 |
-| T07 | Colisiones de paredes y collision layers | M2 | Not started | XFE-11 |
+| T07 | Colisiones de paredes y collision layers | M2 | Completed | XFE-11 |
 | T08 | Escena Level y Camera2D | M2 | Not started | XFE-12 |
 | T09 | Escena Coin animada | M3 | Not started | XFE-13 |
 | T10 | Recoger una moneda | M3 | Not started | XFE-14 |
@@ -93,5 +93,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `scenes/level.tscn` con raíz `Node2D` y un `TileMapLayer` llamado `Walls`, con un `TileSet` de tiles 8x8 sobre `Terrain Sheet.png`. Habitación de 40x23 tiles con suelo, paredes, esquinas y dos bloques interiores, y un hueco de 2 tiles (`x = 20..21`) en la pared superior para la salida.
 - **Dificultades:** el hueco de la salida tenía 1 tile, igual que el ancho del jugador, y lo amplié a 2. La habitación mide 23 filas (184 px) frente a 180 px de pantalla, así que la última fila se corta unos píxeles; se decidió dejarlo y resolverlo con la `Camera2D` en T08.
 - **Notas de revisión:** verificado juntos decodificando las celdas del `.tscn` (perímetro cerrado salvo el hueco) y con F6. Suelo y paredes comparten una sola capa; se decidirá en T07 si se separan o si la colisión va por tile.
+
+### T07 — Colisiones de paredes y collision layers
+- **Estado:** Completed
+- **Linear:** XFE-11
+- **Fechas:** 2026-10-11 / 2026-10-11
+- **Qué aprendí:** un `TileSet` necesita una physics layer antes de que sus tiles puedan tener colisión, y cada tile lleva su propio polígono. La *layer* es "en qué capa estoy" y la *mask* es "contra qué capas choco"; se guardan como bits que se suman (`world` = 1, `player` = 2, así que 3 = ambas). Los nombres de layers se definen en Project Settings. *Debug → Visible Collision Shapes* permite ver las colisiones al ejecutar.
+- **Qué implementé:** physics layer 0 en el `TileSet` (`collision_layer = 1`, `world`) con un polígono cuadrado de 8x8 en los tiles de pared (columnas 0 a 3 del atlas y el `(1,1)`), sin colisión en suelo ni zonas decorativas. Layers nombradas `world`, `player`, `enemy` y `pickup`. Jugador en la layer `player` y mask solo `world`.
+- **Dificultades:** el jugador tenía `collision_mask = 3`, que incluía su propia layer; se corrigió a `1`. Quedó pendiente de decisión de diseño qué zonas interiores son obstáculos: se dejaron como decoración caminable.
+- **Notas de revisión:** verificado juntos con F6 en una escena temporal `test.tscn` (borrada después): el jugador choca con paredes, esquinas y pilares, y pasa por el suelo y las zonas sin colisión. Suelo y paredes siguen en una sola capa `Walls`, con colisión solo en los tiles de pared.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

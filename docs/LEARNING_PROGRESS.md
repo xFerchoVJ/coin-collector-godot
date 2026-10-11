@@ -10,7 +10,7 @@
 | T01 | Inicializar Git y ajustar `.gitignore` | M0 | Completed | XFE-5 |
 | T02 | Configurar el proyecto para pixel art y organizar carpetas | M0 | Completed | XFE-6 |
 | T03 | Escena Player | M1 | Completed | XFE-7 |
-| T04 | Movimiento top-down con Input Map | M1 | Not started | XFE-8 |
+| T04 | Movimiento top-down con Input Map | M1 | Completed | XFE-8 |
 | T05 | Animaciones idle y walk | M1 | Not started | XFE-9 |
 | T06 | TileSet y pintar la habitación | M2 | Not started | XFE-10 |
 | T07 | Colisiones de paredes y collision layers | M2 | Not started | XFE-11 |
@@ -66,5 +66,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `scenes/player.tscn` con `CharacterBody2D`, `Sprite2D` (`vframes = 4`, un solo frame visible) y `CollisionShape2D` (rectángulo de 8x7 en `(0, 0.5)`), probada con una escena temporal.
 - **Dificultades:** ninguna.
 - **Notas de revisión:** verificado juntos. La colisión coincide con los píxeles opacos del frame 0 (8x7). La escena de prueba `test.tscn` se borró después de verificar.
+
+### T04 — Movimiento top-down con Input Map
+- **Estado:** Completed
+- **Linear:** XFE-8
+- **Fechas:** 2026-10-11 / 2026-10-11
+- **Qué aprendí:** el Input Map asigna nombres de acción a teclas, y el código pregunta por la acción (como un `routes.rb`). `Input.get_vector()` devuelve un vector ya normalizado, así que la diagonal no es más rápida. `velocity` está en px/s y `move_and_slide()` aplica `delta` internamente. Los parámetros no usados se prefijan con `_`. `physical_keycode` mapea la posición física de la tecla, así que WASD funciona en cualquier distribución.
+- **Qué implementé:** `scripts/player.gd` (`CharacterBody2D`, `@export var speed: float = 80`, `Input.get_vector` y `move_and_slide()` en `_physics_process`) y las acciones `move_left`, `move_right`, `move_up` y `move_down` en el Input Map.
+- **Dificultades:** al principio usé las acciones `ui_*` en vez de acciones propias, y una velocidad de 200 que era excesiva para un viewport de 320x180. El script quedó primero en `ui/` y lo moví a `scripts/` desde el panel FileSystem de Godot.
+- **Notas de revisión:** verificado juntos: movimiento en las cuatro direcciones, diagonal igual de rápida y velocidad de 80 cómoda. El aviso `Case mismatch ... res://Scenes/player.tscn` venía de la caché del editor en `.godot/` (rastro del renombrado de carpetas en T02), no del código.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

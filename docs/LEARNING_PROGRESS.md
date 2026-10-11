@@ -7,8 +7,8 @@
 ## Resumen
 | ID | Tarea | Milestone | Estado | Linear |
 |---|---|---|---|---|
-| T01 | Inicializar Git y ajustar `.gitignore` | M0 | Not started | XFE-5 |
-| T02 | Configurar el proyecto para pixel art y organizar carpetas | M0 | Not started | XFE-6 |
+| T01 | Inicializar Git y ajustar `.gitignore` | M0 | Completed | XFE-5 |
+| T02 | Configurar el proyecto para pixel art y organizar carpetas | M0 | Completed | XFE-6 |
 | T03 | Escena Player | M1 | Not started | XFE-7 |
 | T04 | Movimiento top-down con Input Map | M1 | Not started | XFE-8 |
 | T05 | Animaciones idle y walk | M1 | Not started | XFE-9 |
@@ -40,4 +40,22 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Notas de revisión:**
 ```
 
-*(Las secciones por tarea se añaden al empezar cada una.)*
+### T01 — Inicializar Git y ajustar `.gitignore`
+- **Estado:** Completed
+- **Linear:** XFE-5
+- **Fechas:** 2026-10-11 / 2026-10-11
+- **Qué aprendí:** `.godot/` es caché regenerable y no se versiona, como `tmp/` en Rails. Los archivos `.import` sí se versionan.
+- **Qué implementé:** `git init`, `Thumbs.db` en el `.gitignore` y el primer commit (`86ed279`).
+- **Dificultades:** ninguna.
+- **Notas de revisión:** verificado juntos con `git log`, `git status` y `git check-ignore`. Hay 21 `.import` versionados. Pendiente opcional: salto de línea final en `.gitignore`.
+
+### T02 — Configurar pixel art y organizar carpetas
+- **Estado:** Completed
+- **Linear:** XFE-6
+- **Fechas:** 2026-10-11 / 2026-10-11
+- **Qué aprendí:** el viewport es la resolución lógica del juego y el override de ventana es el tamaño real, son ajustes distintos. El filtro `Nearest` (valor 0) evita que el pixel art se vea borroso. Las carpetas del proyecto van en `snake_case` minúsculas por compatibilidad entre plataformas.
+- **Qué implementé:** viewport 320x180, ventana 1280x720 (escala 4x), filtro de texturas Nearest, y carpetas `scenes/`, `scripts/` y `ui/`.
+- **Dificultades:** al principio puse 1280x720 en el viewport en vez de en el override, lo que hacía los sprites diminutos. Las carpetas las creé con mayúscula inicial y las renombré.
+- **Notas de revisión:** verificado juntos revisando `project.godot`. La escena de prueba se borró, así que T03 empieza desde cero. `scripts/` y `ui/` siguen vacías y Git no las versiona hasta que tengan archivos.
+
+*(Las secciones de las demás tareas se añaden al empezar cada una.)*

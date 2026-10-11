@@ -9,7 +9,7 @@
 |---|---|---|---|---|
 | T01 | Inicializar Git y ajustar `.gitignore` | M0 | Completed | XFE-5 |
 | T02 | Configurar el proyecto para pixel art y organizar carpetas | M0 | Completed | XFE-6 |
-| T03 | Escena Player | M1 | Not started | XFE-7 |
+| T03 | Escena Player | M1 | Completed | XFE-7 |
 | T04 | Movimiento top-down con Input Map | M1 | Not started | XFE-8 |
 | T05 | Animaciones idle y walk | M1 | Not started | XFE-9 |
 | T06 | TileSet y pintar la habitación | M2 | Not started | XFE-10 |
@@ -57,5 +57,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** viewport 320x180, ventana 1280x720 (escala 4x), filtro de texturas Nearest, y carpetas `scenes/`, `scripts/` y `ui/`.
 - **Dificultades:** al principio puse 1280x720 en el viewport en vez de en el override, lo que hacía los sprites diminutos. Las carpetas las creé con mayúscula inicial y las renombré.
 - **Notas de revisión:** verificado juntos revisando `project.godot`. La escena de prueba se borró, así que T03 empieza desde cero. `scripts/` y `ui/` siguen vacías y Git no las versiona hasta que tengan archivos.
+
+### T03 — Escena Player
+- **Estado:** Completed
+- **Linear:** XFE-7
+- **Fechas:** 2026-10-11 / 2026-10-11
+- **Qué aprendí:** una escena es un árbol de nodos reutilizable que se instancia dentro de otras. Un `CharacterBody2D` necesita siempre una forma de colisión. `vframes` y `hframes` dividen una tira de sprites en frames. F6 ejecuta la escena abierta y F5 la principal.
+- **Qué implementé:** `scenes/player.tscn` con `CharacterBody2D`, `Sprite2D` (`vframes = 4`, un solo frame visible) y `CollisionShape2D` (rectángulo de 8x7 en `(0, 0.5)`), probada con una escena temporal.
+- **Dificultades:** ninguna.
+- **Notas de revisión:** verificado juntos. La colisión coincide con los píxeles opacos del frame 0 (8x7). La escena de prueba `test.tscn` se borró después de verificar.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

@@ -11,7 +11,7 @@
 | T02 | Configurar el proyecto para pixel art y organizar carpetas | M0 | Completed | XFE-6 |
 | T03 | Escena Player | M1 | Completed | XFE-7 |
 | T04 | Movimiento top-down con Input Map | M1 | Completed | XFE-8 |
-| T05 | Animaciones idle y walk | M1 | Not started | XFE-9 |
+| T05 | Animaciones idle y walk | M1 | Completed | XFE-9 |
 | T06 | TileSet y pintar la habitación | M2 | Not started | XFE-10 |
 | T07 | Colisiones de paredes y collision layers | M2 | Not started | XFE-11 |
 | T08 | Escena Level y Camera2D | M2 | Not started | XFE-12 |
@@ -75,5 +75,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `scripts/player.gd` (`CharacterBody2D`, `@export var speed: float = 80`, `Input.get_vector` y `move_and_slide()` en `_physics_process`) y las acciones `move_left`, `move_right`, `move_up` y `move_down` en el Input Map.
 - **Dificultades:** al principio usé las acciones `ui_*` en vez de acciones propias, y una velocidad de 200 que era excesiva para un viewport de 320x180. El script quedó primero en `ui/` y lo moví a `scripts/` desde el panel FileSystem de Godot.
 - **Notas de revisión:** verificado juntos: movimiento en las cuatro direcciones, diagonal igual de rápida y velocidad de 80 cómoda. El aviso `Case mismatch ... res://Scenes/player.tscn` venía de la caché del editor en `.godot/` (rastro del renombrado de carpetas en T02), no del código.
+
+### T05 — Animaciones idle y walk
+- **Estado:** Completed
+- **Linear:** XFE-9
+- **Fechas:** 2026-10-11 / 2026-10-11
+- **Qué aprendí:** `AnimatedSprite2D` reproduce animaciones nombradas guardadas en un recurso `SpriteFrames`. Cada frame de una tira se recorta como `AtlasTexture` con una región (aquí 8x8). `flip_h` espeja el sprite y solo debe cambiarse cuando hay movimiento horizontal, para que el personaje conserve hacia dónde miraba. En Godot 4, `play()` con la animación que ya suena normalmente no la reinicia.
+- **Qué implementé:** `AnimatedSprite2D` en `scenes/player.tscn` con las animaciones `idle` y `walk` (4 frames, 8 FPS, bucle) a partir de `Player Idle.png` y `Player Walk.png`. En `scripts/player.gd`, `idle` o `walk` según `direction == Vector2.ZERO` y `flip_h` con `if`/`elif` sin `else`.
+- **Dificultades:** primero usé `velocity.x > 0` para `walk`, que solo funcionaba hacia la derecha. El `else` del flip volteaba el sprite al quedarse quieto. El arte es frontal y casi simétrico, así que el flip se nota poco; se dejó puesto por el criterio de aceptación.
+- **Notas de revisión:** verificado juntos con F6: `idle` quieto, `walk` en cualquier dirección y el lado se conserva al soltar la tecla y al ir en vertical.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

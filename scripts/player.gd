@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 # Velocidad a la cual el jugador va a moverse
 @export var speed: float = 80
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 func _physics_process(_delta: float) -> void:
 	# Direccion a la cual el jugador esta moviendose
@@ -10,3 +11,16 @@ func _physics_process(_delta: float) -> void:
 	velocity = direction * speed
 	# Aplicar el movimiento
 	move_and_slide()
+	
+	# Aplicar animacion de movimiento
+	if direction == Vector2.ZERO:
+		animated_sprite_2d.play("idle")
+	else:
+		animated_sprite_2d.play("walk")
+		
+	# Voltear el personaje dependiendo hacia donde camine
+	if direction.x > 0:
+		animated_sprite_2d.flip_h = true
+	elif direction.x < 0:
+		animated_sprite_2d.flip_h = false
+		

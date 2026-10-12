@@ -23,7 +23,7 @@
 | T14 | Contacto con el enemigo y derrota | M4 | Completed | XFE-18 |
 | T15 | La salida | M5 | Completed | XFE-19 |
 | T16 | Pantallas de victoria y derrota | M5 | Completed | XFE-20 |
-| T17 | Menú principal | M5 | Not started | XFE-21 |
+| T17 | Menú principal | M5 | Completed | XFE-21 |
 | T18 | Revisión final contra la DoD | M5 | Not started | XFE-22 |
 
 ## Detalle por tarea
@@ -183,5 +183,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `end_screen.tscn` (`CanvasLayer` + `CenterContainer` en *Full Rect* + `VBoxContainer` con `Label` y `Button`) con `end_screen.gd`: oculta en `_ready()`, `update_label(msg: String)` que pone el texto y la muestra, y la señal `button_pressed` emitida desde `_on_button_pressed`. En `level.gd`: referencia `end_screen`, conexión de `button_pressed` a `_on_player_pressed_button` (que recarga la escena), `player_win` como guard, y las llamadas a `update_label("Perdiste")` y `update_label("Ganaste!")` en lugar de los `print` de T14 y T15. `EndScreen` instanciada en `level.tscn`.
 - **Dificultades:** puse `visible = false` en la derrota en vez de `true`, así que la pantalla no aparecía al perder. El `CenterContainer` tenía un rectángulo fijo en vez de ocupar la pantalla.
 - **Notas de revisión:** verificado con F5: se puede perder y ganar con el mensaje correcto, el botón reinicia con el estado restaurado (HUD a `0 / 4`, enemigos y monedas en su sitio), la pantalla queda encima del HUD y no se ve al empezar. Pendientes opcionales: renombrar `update_label` a `show_message`, y que el jugador deje de moverse al ganar (se retomará en T18).
+
+### T17 — Menú principal
+- **Estado:** Completed
+- **Linear:** XFE-21
+- **Fechas:** 2026-10-12 / 2026-10-12
+- **Qué aprendí:** la escena principal (`run/main_scene` en `project.godot`) es la que Godot carga al arrancar. `get_tree().change_scene_to_file("res://...")` cambia de escena y `get_tree().quit()` cierra el juego. `layout_mode` de un `Control` depende de su padre: bajo un `Control` normal, un hijo en modo Position no ofrece presets de anclaje y hay que cambiarlo a Anchors antes de aplicar *Full Rect*; bajo un contenedor lo coloca el contenedor. Un `Control` raíz en *Full Rect* ocupa la ventana.
+- **Qué implementé:** `main_menu.tscn` con raíz `Control` en *Full Rect*, `CenterContainer` en *Full Rect*, `VBoxContainer` con un `Label` (título "Coin Collector", centrado) y dos `Button` (iniciar y cerrar juego). `main_menu.gd` con `_on_start_game_pressed` (carga `res://scenes/level.tscn`) y `_on_close_game_pressed` (`quit()`), conectados por el editor. Escena principal cambiada a `main_menu.tscn`.
+- **Dificultades:** el `CenterContainer` quedó con un rectángulo de 40x40 porque estaba en modo Position y no aparecía el preset *Full Rect*; se resolvió cambiando Layout Mode a Anchors.
+- **Notas de revisión:** verificado con F5: el juego arranca en el menú con todo centrado, Iniciar carga el nivel, se puede jugar de principio a fin y Cerrar cierra la ventana. Pendientes opcionales: los textos de los botones tienen un salto de línea al final, y decidir si el fin de partida debe poder volver al menú.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://couew8u5vq71f"]
+
+[ext_resource type="Script" uid="uid://cjweheoy8kqhe" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+
+[node name="MainMenu" type="Control" unique_id=1481587986]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l6cm7")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=885161269]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=822768839]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=996356796]
+layout_mode = 2
+text = "Coin Collector"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartGame" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1870242294]
+layout_mode = 2
+text = "Iniciar juego
+"
+
+[node name="CloseGame" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1650661505]
+layout_mode = 2
+text = "Cerrar juego
+"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CloseGame" to="." method="_on_close_game_pressed"]

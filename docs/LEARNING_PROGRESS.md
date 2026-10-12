@@ -18,7 +18,7 @@
 | T09 | Escena Coin animada | M3 | Completed | XFE-13 |
 | T10 | Recoger una moneda | M3 | Completed | XFE-14 |
 | T11 | Contador de monedas y HUD | M3 | Completed | XFE-15 |
-| T12 | Escena Enemy animada | M4 | Not started | XFE-16 |
+| T12 | Escena Enemy animada | M4 | Completed | XFE-16 |
 | T13 | Patrulla del enemigo | M4 | Not started | XFE-17 |
 | T14 | Contacto con el enemigo y derrota | M4 | Not started | XFE-18 |
 | T15 | La salida | M5 | Not started | XFE-19 |
@@ -138,5 +138,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `hud.tscn` (`CanvasLayer` + `Label`) con `hud.gd` y `update_counter(collected, total)`. Señal `coin_collected` en `coin.gd`, emitida antes de `queue_free()`. `level.gd` cuenta el total en `_ready()`, conecta la señal de cada moneda del grupo `coins` y actualiza el HUD con "x / total".
 - **Dificultades:** conectar la señal por código. Tuve que entender que `connect()` recibe un método de este script, no el de la moneda, y que va sin paréntesis. También un typo en el tipo del `Array`.
 - **Notas de revisión:** verificado juntos: el HUD muestra `0 / 4` al inicio y sube hasta `4 / 4`. Pendientes opcionales: `class_name` en `Coin` y `HUD` para quitar avisos de acceso inseguro, y unificar el texto del HUD.
+
+### T12 — Escena Enemy animada
+- **Estado:** Completed
+- **Linear:** XFE-16
+- **Fechas:** 2026-10-11 / 2026-10-12
+- **Qué aprendí:** elegir el nodo raíz según si el cuerpo debe chocar físicamente o solo detectar: `CharacterBody2D` se mueve con `move_and_slide()` y choca con paredes; `Area2D` también puede moverse, pero atraviesa todo y solo detecta solapamientos. La mask de un cuerpo solo debe incluir las capas contra las que choca físicamente; detectar al jugador se hace con un `Area2D` aparte (T14). `autoplay` reproduce la animación; `animation` solo la muestra en el editor.
+- **Qué implementé:** `enemy.tscn` con raíz `CharacterBody2D`, `AnimatedSprite2D` con `idle` y `walk` (4 frames, 8 FPS, bucle) y autoplay en `idle`, y `CollisionShape2D` de 6x4. Capa 3 (`enemy`) y mask solo `world` (valor por defecto). Dos enemigos instanciados en `level.tscn`.
+- **Dificultades:** faltaba el autoplay (la animación no se reproducía) y dudé de la mask del enemigo: la había puesto en `player`, luego en `world` + `player`. Concluimos que solo `world`, porque el choque con el jugador es una detección, no una colisión física.
+- **Notas de revisión:** verificado juntos con F5: los dos enemigos se ven animados y no quedan dentro de paredes. Justificación del nodo: el enemigo se moverá y debe respetar las paredes.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

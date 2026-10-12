@@ -14,7 +14,7 @@
 | T05 | Animaciones idle y walk | M1 | Completed | XFE-9 |
 | T06 | TileSet y pintar la habitación | M2 | Completed | XFE-10 |
 | T07 | Colisiones de paredes y collision layers | M2 | Completed | XFE-11 |
-| T08 | Escena Level y Camera2D | M2 | Not started | XFE-12 |
+| T08 | Escena Level y Camera2D | M2 | Completed | XFE-12 |
 | T09 | Escena Coin animada | M3 | Not started | XFE-13 |
 | T10 | Recoger una moneda | M3 | Not started | XFE-14 |
 | T11 | Contador de monedas y HUD | M3 | Not started | XFE-15 |
@@ -102,5 +102,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** physics layer 0 en el `TileSet` (`collision_layer = 1`, `world`) con un polígono cuadrado de 8x8 en los tiles de pared (columnas 0 a 3 del atlas y el `(1,1)`), sin colisión en suelo ni zonas decorativas. Layers nombradas `world`, `player`, `enemy` y `pickup`. Jugador en la layer `player` y mask solo `world`.
 - **Dificultades:** el jugador tenía `collision_mask = 3`, que incluía su propia layer; se corrigió a `1`. Quedó pendiente de decisión de diseño qué zonas interiores son obstáculos: se dejaron como decoración caminable.
 - **Notas de revisión:** verificado juntos con F6 en una escena temporal `test.tscn` (borrada después): el jugador choca con paredes, esquinas y pilares, y pasa por el suelo y las zonas sin colisión. Suelo y paredes siguen en una sola capa `Walls`, con colisión solo en los tiles de pared.
+
+### T08 — Escena Level y Camera2D
+- **Estado:** Completed
+- **Linear:** XFE-12
+- **Fechas:** 2026-10-11 / 2026-10-11
+- **Qué aprendí:** una escena se instancia dentro de otra y se pueden cambiar propiedades de la instancia, como la posición, sin tocar la escena original. `Camera2D` decide qué parte del mundo se ve, y sus límites (`limit_left`, `limit_top`, `limit_right`, `limit_bottom`) están en píxeles del mundo. El índice del último tile no es el número de tiles: 40 columnas son los índices 0 a 39. `level.tscn` se ejecuta con F5 al fijarlo como escena principal.
+- **Qué implementé:** `player.tscn` instanciado en `level.tscn` en `(146, 104)`, `Camera2D` como hija del jugador con límites `0, 0, 320, 184`, y `level.tscn` como escena principal. El `TileMapLayer` se renombró de `Walls` a `Map`.
+- **Dificultades:** puse primero los límites `right = 312` y `bottom = 176`, que son los índices de la última columna y fila por 8, en vez de 320 y 184, que son el conteo de tiles por 8.
+- **Notas de revisión:** verificado juntos con F5: se ve la habitación entera, las cuatro paredes completas y el jugador se mueve por ella. La cámara va dentro de `player.tscn`, así que los límites viven en la escena del jugador; con un solo nivel es suficiente, con varios habría que ajustarlos en cada uno.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

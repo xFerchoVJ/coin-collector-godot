@@ -86,4 +86,10 @@ shape = SubResource("RectangleShape2D_u0ya7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=755917169]
 sprite_frames = SubResource("SpriteFrames_u0ya7")
-animation = &"walk"
+animation = &"idle"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=561456440]
+limit_left = 0
+limit_top = 0
+limit_right = 320
+limit_bottom = 184

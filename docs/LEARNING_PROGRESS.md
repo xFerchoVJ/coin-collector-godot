@@ -21,7 +21,7 @@
 | T12 | Escena Enemy animada | M4 | Completed | XFE-16 |
 | T13 | Patrulla del enemigo | M4 | Completed | XFE-17 |
 | T14 | Contacto con el enemigo y derrota | M4 | Completed | XFE-18 |
-| T15 | La salida | M5 | Not started | XFE-19 |
+| T15 | La salida | M5 | Completed | XFE-19 |
 | T16 | Pantallas de victoria y derrota | M5 | Not started | XFE-20 |
 | T17 | Menú principal | M5 | Not started | XFE-21 |
 | T18 | Revisión final contra la DoD | M5 | Not started | XFE-22 |
@@ -165,5 +165,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `HitArea` (`Area2D`, mask a `player`) en `enemy.tscn`, con la señal `kill_player` emitida desde `_on_hit_area_body_entered` tras comprobar el grupo `player`. Grupo `enemies` en el enemigo. `Player.die()` pone `is_alive = false`, reproduce la animación `die` (1 frame, sin bucle, desde `Player Dead.png`) y desactiva `_physics_process`. `level.gd` conecta la señal de cada enemigo del grupo y, con el guard `is_alive`, llama a `die()` y hace `print("Juego terminado")` una sola vez.
 - **Dificultades:** ninguna destacable.
 - **Notas de revisión:** verificado con F5: el jugador muere al tocar un enemigo, se queda en la pose `die`, no responde al input y la derrota se registra una sola vez. Pendientes opcionales: renombrar la señal `kill_player` a un evento (`player_touched`), tipar `is_alive` y `die()`, y usar `not` en vez de `!`.
+
+### T15 — La salida
+- **Estado:** Completed
+- **Linear:** XFE-19
+- **Fechas:** 2026-10-12 / 2026-10-12
+- **Qué aprendí:** `monitoring` decide si un `Area2D` detecta cuerpos (apagado, no emite `body_entered`); `monitorable` decide si otros pueden detectarla a ella. Cambiar propiedades físicas desde una señal puede fallar, y `set_deferred` aplica el cambio al final del frame. Una escena puede tener varios estados con animaciones distintas (`idle` cerrada, `open` abierta sin bucle). Las conexiones de señales se hacen una sola vez en `_ready()`, no dentro de un manejador; el método va sin paréntesis. Los métodos conectados a una señal no se llaman a mano. "Call down, signal up": las monedas avisan, el nivel cuenta y llama a `open()`, y la salida avisa con `player_entered`. Un script `extends` debe coincidir con el tipo del nodo al que se asigna.
+- **Qué implementé:** `exit.tscn` con raíz `Area2D`, `AnimatedSprite2D` (`idle` y `open` desde `Chest Idle.png` y `Chest Open.png`, esta última sin bucle) y `CollisionShape2D`, con `monitoring = false` y mask a `player`. `exit.gd` con la señal `player_entered`, el manejador de `body_entered` con comprobación del grupo `player` y `open()` (animación `open` y `set_deferred("monitoring", true)`). `level.gd` con la referencia `exit`, la conexión de `player_entered` en `_ready()`, la llamada a `exit.open()` al recoger la última moneda (`>=`) y `_on_player_entered_exit` con guard `is_alive` y `print("Nivel completado")`. `Exit` instanciada en `level.tscn`.
+- **Dificultades:** el script `exit.gd` quedó asignado por error al nodo raíz `Level` (error "Script inherits from native type 'Area2D'"). Conecté `connect()` sin argumentos dentro del propio manejador y llamé al manejador a mano desde `_on_coin_collected`; lo corregí moviendo la conexión a `_ready()`.
+- **Notas de revisión:** verificado con F5: la salida no hace nada antes de recoger las 4 monedas, se abre al recoger la última, imprime "Nivel completado" al entrar y no lo hace si el jugador murió antes. Sin errores en consola. Pendientes opcionales: `class_name` en `Coin`, `HUD` y `Exit` para quitar los avisos `UNSAFE_METHOD_ACCESS`, y renombrar `exit` si choca con alguna palabra reservada en el futuro.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

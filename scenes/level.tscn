@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d3mdkij85uie" path="res://scenes/coin.tscn" id="3_w8frs"]
 [ext_resource type="PackedScene" uid="uid://df45nl21mi3br" path="res://scenes/hud.tscn" id="4_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://dtjbvg85t0mgv" path="res://scenes/enemy.tscn" id="6_2r41h"]
+[ext_resource type="PackedScene" uid="uid://d0jkpcvc3ouqb" path="res://scenes/exit.tscn" id="7_klq6b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w7c3h"]
 texture = ExtResource("1_2q6dc")
@@ -90,3 +91,7 @@ distance = 70.0
 [node name="Enemy2" parent="." unique_id=1180142810 instance=ExtResource("6_2r41h")]
 position = Vector2(153, 54)
 distance = 100.0
+
+[node name="Exit" parent="." unique_id=245455421 instance=ExtResource("7_klq6b")]
+position = Vector2(168, 4)
+scale = Vector2(1.5, 1.5)

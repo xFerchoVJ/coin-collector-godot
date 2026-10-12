@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cavctafxksv0q"]
+
+[ext_resource type="Script" uid="uid://vrouy0vqhcsk" path="res://scripts/end_screen.gd" id="1_kq7ac"]
+
+[node name="EndScreen" type="CanvasLayer" unique_id=723948261]
+script = ExtResource("1_kq7ac")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=87686218]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=944330619]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=479013539]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=364995787]
+layout_mode = 2
+text = "Reiniciar partida"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

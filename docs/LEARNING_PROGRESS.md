@@ -22,7 +22,7 @@
 | T13 | Patrulla del enemigo | M4 | Completed | XFE-17 |
 | T14 | Contacto con el enemigo y derrota | M4 | Completed | XFE-18 |
 | T15 | La salida | M5 | Completed | XFE-19 |
-| T16 | Pantallas de victoria y derrota | M5 | Not started | XFE-20 |
+| T16 | Pantallas de victoria y derrota | M5 | Completed | XFE-20 |
 | T17 | Menú principal | M5 | Not started | XFE-21 |
 | T18 | Revisión final contra la DoD | M5 | Not started | XFE-22 |
 
@@ -174,5 +174,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `exit.tscn` con raíz `Area2D`, `AnimatedSprite2D` (`idle` y `open` desde `Chest Idle.png` y `Chest Open.png`, esta última sin bucle) y `CollisionShape2D`, con `monitoring = false` y mask a `player`. `exit.gd` con la señal `player_entered`, el manejador de `body_entered` con comprobación del grupo `player` y `open()` (animación `open` y `set_deferred("monitoring", true)`). `level.gd` con la referencia `exit`, la conexión de `player_entered` en `_ready()`, la llamada a `exit.open()` al recoger la última moneda (`>=`) y `_on_player_entered_exit` con guard `is_alive` y `print("Nivel completado")`. `Exit` instanciada en `level.tscn`.
 - **Dificultades:** el script `exit.gd` quedó asignado por error al nodo raíz `Level` (error "Script inherits from native type 'Area2D'"). Conecté `connect()` sin argumentos dentro del propio manejador y llamé al manejador a mano desde `_on_coin_collected`; lo corregí moviendo la conexión a `_ready()`.
 - **Notas de revisión:** verificado con F5: la salida no hace nada antes de recoger las 4 monedas, se abre al recoger la última, imprime "Nivel completado" al entrar y no lo hace si el jugador murió antes. Sin errores en consola. Pendientes opcionales: `class_name` en `Coin`, `HUD` y `Exit` para quitar los avisos `UNSAFE_METHOD_ACCESS`, y renombrar `exit` si choca con alguna palabra reservada en el futuro.
+
+### T16 — Pantallas de victoria y derrota
+- **Estado:** Completed
+- **Linear:** XFE-20
+- **Fechas:** 2026-10-12 / 2026-10-12
+- **Qué aprendí:** los nodos `Control` se colocan con anclajes y contenedores, no con posiciones fijas; el preset *Full Rect* estira un `Control` a todo el padre y `CenterContainer` centra a su hijo respecto a ese espacio. `VBoxContainer` apila hijos en vertical. Un `CanvasLayer` dibuja la UI encima del juego, fija respecto a la cámara. `Button.pressed` se conecta como cualquier señal. `get_tree().reload_current_scene()` recarga todo desde cero, así que el estado (contadores, banderas) se restaura solo. Una escena reutilizable con un método que recibe el texto sirve para varias pantallas. Una bandera de estado (`player_win`) evita estados contradictorios (ganar y perder a la vez).
+- **Qué implementé:** `end_screen.tscn` (`CanvasLayer` + `CenterContainer` en *Full Rect* + `VBoxContainer` con `Label` y `Button`) con `end_screen.gd`: oculta en `_ready()`, `update_label(msg: String)` que pone el texto y la muestra, y la señal `button_pressed` emitida desde `_on_button_pressed`. En `level.gd`: referencia `end_screen`, conexión de `button_pressed` a `_on_player_pressed_button` (que recarga la escena), `player_win` como guard, y las llamadas a `update_label("Perdiste")` y `update_label("Ganaste!")` en lugar de los `print` de T14 y T15. `EndScreen` instanciada en `level.tscn`.
+- **Dificultades:** puse `visible = false` en la derrota en vez de `true`, así que la pantalla no aparecía al perder. El `CenterContainer` tenía un rectángulo fijo en vez de ocupar la pantalla.
+- **Notas de revisión:** verificado con F5: se puede perder y ganar con el mensaje correcto, el botón reinicia con el estado restaurado (HUD a `0 / 4`, enemigos y monedas en su sitio), la pantalla queda encima del HUD y no se ve al empezar. Pendientes opcionales: renombrar `update_label` a `show_message`, y que el jugador deje de moverse al ganar (se retomará en T18).
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

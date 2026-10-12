@@ -19,7 +19,7 @@
 | T10 | Recoger una moneda | M3 | Completed | XFE-14 |
 | T11 | Contador de monedas y HUD | M3 | Completed | XFE-15 |
 | T12 | Escena Enemy animada | M4 | Completed | XFE-16 |
-| T13 | Patrulla del enemigo | M4 | Not started | XFE-17 |
+| T13 | Patrulla del enemigo | M4 | Completed | XFE-17 |
 | T14 | Contacto con el enemigo y derrota | M4 | Not started | XFE-18 |
 | T15 | La salida | M5 | Not started | XFE-19 |
 | T16 | Pantallas de victoria y derrota | M5 | Not started | XFE-20 |
@@ -147,5 +147,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `enemy.tscn` con raíz `CharacterBody2D`, `AnimatedSprite2D` con `idle` y `walk` (4 frames, 8 FPS, bucle) y autoplay en `idle`, y `CollisionShape2D` de 6x4. Capa 3 (`enemy`) y mask solo `world` (valor por defecto). Dos enemigos instanciados en `level.tscn`.
 - **Dificultades:** faltaba el autoplay (la animación no se reproducía) y dudé de la mask del enemigo: la había puesto en `player`, luego en `world` + `player`. Concluimos que solo `world`, porque el choque con el jugador es una detección, no una colisión física.
 - **Notas de revisión:** verificado juntos con F5: los dos enemigos se ven animados y no quedan dentro de paredes. Justificación del nodo: el enemigo se moverá y debe respetar las paredes.
+
+### T13 — Patrulla del enemigo
+- **Estado:** Completed
+- **Linear:** XFE-17
+- **Fechas:** 2026-10-12 / 2026-10-12
+- **Qué aprendí:** `@export` expone variables en el inspector y cada instancia guarda su propio valor (recorridos distintos sin tocar el script). Un `CharacterBody2D` se mueve asignando `velocity` y llamando a `move_and_slide()`. Diferencia entre `position` (local) y `global_position`; el origen de la patrulla se guarda en una variable miembro, no se sobrescribe `position`. La patrulla es "medir cuánto me alejé del inicio e invertir la dirección al superar el límite". `flip_h` y la animación se derivan del estado (`direction`, `velocity`), sin `if` que se active una sola vez. Existe `is_on_wall()` para detectar choques tras `move_and_slide()`.
+- **Qué implementé:** `scripts/enemy.gd` en la raíz de `enemy.tscn`, con `speed` y `distance` exportadas, `start_position` guardada en `_ready()`, `direction` (-1/1) que se invierte con `absf(distance_traveled) >= distance`, `flip_h = direction > 0` y `walk`/`idle` según `velocity`. `Enemy` con `distance = 70` y `Enemy2` con `distance = 100` en `level.tscn`.
+- **Dificultades:** confundir `position` con una dirección (`velocity = speed * position`) y comparar `start_position` con `distance` en vez de la distancia recorrida. Un enemigo chocaba con una pared y se quedaba atascado; lo resolví reduciendo su `distance` en el inspector.
+- **Notas de revisión:** verificado con F5: ambos enemigos patrullan sin parar, el sprite mira hacia donde camina y cada uno recorre una distancia distinta. Pendiente opcional: dar la vuelta con `is_on_wall()` para no depender de configurar bien `distance`.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

@@ -85,6 +85,8 @@ position = Vector2(274, 149)
 
 [node name="Enemy" parent="." unique_id=199469382 instance=ExtResource("6_2r41h")]
 position = Vector2(149, 154)
+distance = 70.0
 
 [node name="Enemy2" parent="." unique_id=1180142810 instance=ExtResource("6_2r41h")]
 position = Vector2(153, 54)
+distance = 100.0

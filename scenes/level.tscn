@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://n0w818w6u6km" path="res://Assets/Terrain Sheet.png" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://dnptro3ll5y3o" path="res://scenes/player.tscn" id="2_w7c3h"]
+[ext_resource type="PackedScene" uid="uid://d3mdkij85uie" path="res://scenes/coin.tscn" id="3_w8frs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w7c3h"]
 texture = ExtResource("1_2q6dc")
@@ -63,3 +64,15 @@ tile_set = SubResource("TileSet_u0ya7")
 
 [node name="Player" parent="." unique_id=367730820 instance=ExtResource("2_w7c3h")]
 position = Vector2(146, 104)
+
+[node name="Coin" parent="." unique_id=1201971875 instance=ExtResource("3_w8frs")]
+position = Vector2(150, 74)
+
+[node name="Coin2" parent="." unique_id=1634305634 instance=ExtResource("3_w8frs")]
+position = Vector2(120, 43)
+
+[node name="Coin3" parent="." unique_id=1503385245 instance=ExtResource("3_w8frs")]
+position = Vector2(29, 102)
+
+[node name="Coin4" parent="." unique_id=892232413 instance=ExtResource("3_w8frs")]
+position = Vector2(274, 149)

@@ -15,7 +15,7 @@
 | T06 | TileSet y pintar la habitación | M2 | Completed | XFE-10 |
 | T07 | Colisiones de paredes y collision layers | M2 | Completed | XFE-11 |
 | T08 | Escena Level y Camera2D | M2 | Completed | XFE-12 |
-| T09 | Escena Coin animada | M3 | Not started | XFE-13 |
+| T09 | Escena Coin animada | M3 | Completed | XFE-13 |
 | T10 | Recoger una moneda | M3 | Not started | XFE-14 |
 | T11 | Contador de monedas y HUD | M3 | Not started | XFE-15 |
 | T12 | Escena Enemy animada | M4 | Not started | XFE-16 |
@@ -111,5 +111,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `player.tscn` instanciado en `level.tscn` en `(146, 104)`, `Camera2D` como hija del jugador con límites `0, 0, 320, 184`, y `level.tscn` como escena principal. El `TileMapLayer` se renombró de `Walls` a `Map`.
 - **Dificultades:** puse primero los límites `right = 312` y `bottom = 176`, que son los índices de la última columna y fila por 8, en vez de 320 y 184, que son el conteo de tiles por 8.
 - **Notas de revisión:** verificado juntos con F5: se ve la habitación entera, las cuatro paredes completas y el jugador se mueve por ella. La cámara va dentro de `player.tscn`, así que los límites viven en la escena del jugador; con un solo nivel es suficiente, con varios habría que ajustarlos en cada uno.
+
+### T09 — Escena Coin animada
+- **Estado:** Completed
+- **Linear:** XFE-13
+- **Fechas:** 2026-10-11 / 2026-10-11
+- **Qué aprendí:** un `Area2D` detecta solapamientos pero no bloquea el movimiento, a diferencia de un `StaticBody2D`. Necesita un `CollisionShape2D` hijo para definir su zona. En `AnimatedSprite2D`, el bucle se marca en la animación del `SpriteFrames` y el autoplay se elige en el propio nodo.
+- **Qué implementé:** `coin.tscn` con raíz `Area2D`, `AnimatedSprite2D` con 4 frames de `Coin.png` (animación `idle`, 8 FPS, bucle y autoplay) y `CollisionShape2D` rectangular de 6x6. Cuatro instancias en `level.tscn`.
+- **Dificultades:** ninguna destacable.
+- **Notas de revisión:** verificado juntos: las monedas se animan solas y el jugador las atraviesa sin bloquearse. Las capas de colisión del `Area2D` siguen en sus valores por defecto; se ajustarán en T10.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

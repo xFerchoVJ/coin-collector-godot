@@ -16,7 +16,7 @@
 | T07 | Colisiones de paredes y collision layers | M2 | Completed | XFE-11 |
 | T08 | Escena Level y Camera2D | M2 | Completed | XFE-12 |
 | T09 | Escena Coin animada | M3 | Completed | XFE-13 |
-| T10 | Recoger una moneda | M3 | Not started | XFE-14 |
+| T10 | Recoger una moneda | M3 | Completed | XFE-14 |
 | T11 | Contador de monedas y HUD | M3 | Not started | XFE-15 |
 | T12 | Escena Enemy animada | M4 | Not started | XFE-16 |
 | T13 | Patrulla del enemigo | M4 | Not started | XFE-17 |
@@ -120,5 +120,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `coin.tscn` con raíz `Area2D`, `AnimatedSprite2D` con 4 frames de `Coin.png` (animación `idle`, 8 FPS, bucle y autoplay) y `CollisionShape2D` rectangular de 6x6. Cuatro instancias en `level.tscn`.
 - **Dificultades:** ninguna destacable.
 - **Notas de revisión:** verificado juntos: las monedas se animan solas y el jugador las atraviesa sin bloquearse. Las capas de colisión del `Area2D` siguen en sus valores por defecto; se ajustarán en T10.
+
+### T10 — Recoger una moneda
+- **Estado:** Completed
+- **Linear:** XFE-14
+- **Fechas:** 2026-10-11 / 2026-10-11
+- **Qué aprendí:** una señal es un evento al que se suscribe un método; `body_entered` entrega el cuerpo que entró. Los grupos identifican nodos sin depender de su nombre o ruta (`is_in_group`). `queue_free()` elimina el nodo de forma segura al final del frame. Hay dos filtros: la mask decide si la señal se dispara y el grupo decide si el código actúa. Los cambios en una escena solo cuentan para F5 cuando se guardan en disco.
+- **Qué implementé:** `scripts/coin.gd` en la raíz de `coin.tscn`, con `_on_body_entered` conectado por el editor, comprobación de grupo `player` y `queue_free()`. Jugador en el grupo `player`. `Coin` en la capa 4 (`pickup`) con mask a la capa 2 (`player`).
+- **Dificultades:** las monedas no desaparecían porque el grupo `player` no se había guardado en `player.tscn`; el `if` siempre era falso.
+- **Notas de revisión:** verificado juntos: cada moneda desaparece al tocarla y las paredes no la activan. Los enemigos aún no existen, pero la mask ya los excluye.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

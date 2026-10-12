@@ -76,7 +76,7 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="Player" type="CharacterBody2D" unique_id=367730820]
+[node name="Player" type="CharacterBody2D" unique_id=367730820 groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_cvnsp")
 

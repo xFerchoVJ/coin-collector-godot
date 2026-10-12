@@ -4,6 +4,8 @@ extends CharacterBody2D
 @export var speed: float = 80
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
+var is_alive: bool = true
+
 func _physics_process(_delta: float) -> void:
 	# Direccion a la cual el jugador esta moviendose
 	var direction: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -24,3 +26,11 @@ func _physics_process(_delta: float) -> void:
 	elif direction.x < 0:
 		animated_sprite_2d.flip_h = false
 		
+
+func die() -> void:
+	# Ya no esta vivo
+	is_alive = false
+	# Poner la animacion die
+	animated_sprite_2d.play("die")
+	# Detener input para que deje de moverse
+	set_physics_process(false)

@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal player_touched
+
 @export var speed: float = 80
 @export var distance: float = 80
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -32,5 +34,7 @@ func _physics_process(_delta: float) -> void:
 	else:
 		animated_sprite_2d.play("idle")
 		
-	
-	
+
+func _on_hit_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		player_touched.emit()

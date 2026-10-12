@@ -2,10 +2,15 @@
 
 [ext_resource type="Script" uid="uid://kj8mve7y4xc7" path="res://scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://7r832m17xwd5" path="res://Assets/Strips/Player/Player Idle.png" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://bbk1a4dms31w5" path="res://Assets/Strips/Player/Player Dead.png" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://dcqu6nl70o08b" path="res://Assets/Strips/Player/Player Walk.png" id="3_qhqgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0ya7"]
 size = Vector2(8, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
+atlas = ExtResource("2_dqkch")
+region = Rect2(0, 0, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("1_v0iea")
@@ -41,6 +46,14 @@ region = Rect2(0, 24, 8, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u0ya7"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v2ag")
+}],
+"loop": 0,
+"name": &"die",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dqkch")

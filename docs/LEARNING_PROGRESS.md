@@ -20,7 +20,7 @@
 | T11 | Contador de monedas y HUD | M3 | Completed | XFE-15 |
 | T12 | Escena Enemy animada | M4 | Completed | XFE-16 |
 | T13 | Patrulla del enemigo | M4 | Completed | XFE-17 |
-| T14 | Contacto con el enemigo y derrota | M4 | Not started | XFE-18 |
+| T14 | Contacto con el enemigo y derrota | M4 | Completed | XFE-18 |
 | T15 | La salida | M5 | Not started | XFE-19 |
 | T16 | Pantallas de victoria y derrota | M5 | Not started | XFE-20 |
 | T17 | Menú principal | M5 | Not started | XFE-21 |
@@ -156,5 +156,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `scripts/enemy.gd` en la raíz de `enemy.tscn`, con `speed` y `distance` exportadas, `start_position` guardada en `_ready()`, `direction` (-1/1) que se invierte con `absf(distance_traveled) >= distance`, `flip_h = direction > 0` y `walk`/`idle` según `velocity`. `Enemy` con `distance = 70` y `Enemy2` con `distance = 100` en `level.tscn`.
 - **Dificultades:** confundir `position` con una dirección (`velocity = speed * position`) y comparar `start_position` con `distance` en vez de la distancia recorrida. Un enemigo chocaba con una pared y se quedaba atascado; lo resolví reduciendo su `distance` en el inspector.
 - **Notas de revisión:** verificado con F5: ambos enemigos patrullan sin parar, el sprite mira hacia donde camina y cada uno recorre una distancia distinta. Pendiente opcional: dar la vuelta con `is_on_wall()` para no depender de configurar bien `distance`.
+
+### T14 — Contacto con el enemigo y derrota
+- **Estado:** Completed
+- **Linear:** XFE-18
+- **Fechas:** 2026-10-12 / 2026-10-12
+- **Qué aprendí:** un `Area2D` hijo de un `CharacterBody2D` separa responsabilidades: el cuerpo choca con las paredes y el área solo detecta al jugador. Reparto entre escenas: el enemigo avisa con una señal, el nivel decide y el jugador reacciona. `set_physics_process(false)` congela un nodo sin borrarlo y corta el input. Una bandera booleana (`is_alive`) evita registrar la derrota más de una vez. Las señales se nombran como eventos ya ocurridos.
+- **Qué implementé:** `HitArea` (`Area2D`, mask a `player`) en `enemy.tscn`, con la señal `kill_player` emitida desde `_on_hit_area_body_entered` tras comprobar el grupo `player`. Grupo `enemies` en el enemigo. `Player.die()` pone `is_alive = false`, reproduce la animación `die` (1 frame, sin bucle, desde `Player Dead.png`) y desactiva `_physics_process`. `level.gd` conecta la señal de cada enemigo del grupo y, con el guard `is_alive`, llama a `die()` y hace `print("Juego terminado")` una sola vez.
+- **Dificultades:** ninguna destacable.
+- **Notas de revisión:** verificado con F5: el jugador muere al tocar un enemigo, se queda en la pose `die`, no responde al input y la derrota se registra una sola vez. Pendientes opcionales: renombrar la señal `kill_player` a un evento (`player_touched`), tipar `is_alive` y `die()`, y usar `not` en vez de `!`.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

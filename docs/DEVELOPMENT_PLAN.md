@@ -38,14 +38,14 @@ M0 → M1 → M2 → M3 ─┐
 - Las pantallas de victoria y derrota necesitan la salida (M5) y los enemigos (M4).
 
 ## Definición de terminado del MVP
-- [ ] Puedo mover al jugador con animaciones, y no atraviesa las paredes.
-- [ ] Puedo recoger todas las monedas y el HUD muestra el progreso.
-- [ ] Al menos un enemigo patrulla, y tocarlo me hace perder.
-- [ ] La salida se abre al recoger todas las monedas, y llegar a ella me hace ganar.
-- [ ] Puedo reiniciar tras ganar o perder, y existe un menú principal que inicia el juego.
-- [ ] El juego se ejecuta de principio a fin sin errores en la consola de Godot.
-- [ ] El código usa GDScript tipado, y `LEARNING_PROGRESS.md` está al día.
-- [ ] Puedo explicar con mis palabras qué es una escena, un nodo y una señal.
+- [x] Puedo mover al jugador con animaciones, y no atraviesa las paredes.
+- [x] Puedo recoger todas las monedas y el HUD muestra el progreso.
+- [x] Al menos un enemigo patrulla, y tocarlo me hace perder.
+- [x] La salida se abre al recoger todas las monedas, y llegar a ella me hace ganar.
+- [x] Puedo reiniciar tras ganar o perder, y existe un menú principal que inicia el juego.
+- [x] El juego se ejecuta de principio a fin sin errores en la consola de Godot.
+- [x] El código usa GDScript tipado, y `LEARNING_PROGRESS.md` está al día.
+- [x] Puedo explicar con mis palabras qué es una escena, un nodo y una señal.
 
 ## Fuera de alcance del MVP
 Para evitar el scope creep, quedan excluidos de este MVP:

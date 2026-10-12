@@ -24,7 +24,7 @@
 | T15 | La salida | M5 | Completed | XFE-19 |
 | T16 | Pantallas de victoria y derrota | M5 | Completed | XFE-20 |
 | T17 | Menú principal | M5 | Completed | XFE-21 |
-| T18 | Revisión final contra la DoD | M5 | Not started | XFE-22 |
+| T18 | Revisión final contra la DoD | M5 | Completed | XFE-22 |
 
 ## Detalle por tarea
 Plantilla (la copio a cada tarea cuando la empiezo):
@@ -193,4 +193,13 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Dificultades:** el `CenterContainer` quedó con un rectángulo de 40x40 porque estaba en modo Position y no aparecía el preset *Full Rect*; se resolvió cambiando Layout Mode a Anchors.
 - **Notas de revisión:** verificado con F5: el juego arranca en el menú con todo centrado, Iniciar carga el nivel, se puede jugar de principio a fin y Cerrar cierra la ventana. Pendientes opcionales: los textos de los botones tienen un salto de línea al final, y decidir si el fin de partida debe poder volver al menú.
 
-*(Las secciones de las demás tareas se añaden al empezar cada una.)*
+### T18 — Revisión final contra la DoD
+- **Estado:** Completed
+- **Linear:** XFE-22
+- **Fechas:** 2026-10-12 / 2026-10-12
+- **Qué aprendí:** probar siempre desde el menú, no abriendo la escena del nivel, para validar el flujo real. Las advertencias `UNSAFE_*` del analizador de GDScript vienen desactivadas por defecto; `class_name` registra un tipo global y permite tipar referencias a nodos con scripts propios. Una escena es un árbol de nodos guardado como archivo e instanciable; un nodo aporta una responsabilidad concreta; una señal es un evento que el emisor lanza sin saber quién escucha, y la función conectada es el receptor.
+- **Qué implementé:** revisión de los ocho scripts (`player`, `enemy`, `coin`, `hud`, `exit`, `end_screen`, `level`, `main_menu`): todas las funciones y variables están tipadas y las señales se nombran como eventos. Partida completa desde el menú, ganando y perdiendo, sin errores ni advertencias en la consola.
+- **Dificultades:** ninguna destacable.
+- **Notas de revisión:** DoD verificada punto por punto (movimiento, monedas y HUD, enemigo, salida, reinicio y menú, consola limpia, código tipado y documentación al día, explicación de escena, nodo y señal). Mejoras opcionales fuera de la DoD, no hechas: `class_name` en `Player`, `Coin`, `HUD`, `Exit` y `EndScreen` para tipar las referencias de `level.gd`; que el jugador deje de moverse al ganar; actualizar comentarios obsoletos en `coin.gd`; saltos de línea en los textos de los botones del menú; decidir si el fin de partida vuelve al menú. No se exportó una versión para Windows (opcional).
+
+*(MVP completado. Cualquier mejora posterior se documentaría como nueva tarea.)*

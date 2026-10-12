@@ -17,7 +17,7 @@
 | T08 | Escena Level y Camera2D | M2 | Completed | XFE-12 |
 | T09 | Escena Coin animada | M3 | Completed | XFE-13 |
 | T10 | Recoger una moneda | M3 | Completed | XFE-14 |
-| T11 | Contador de monedas y HUD | M3 | Not started | XFE-15 |
+| T11 | Contador de monedas y HUD | M3 | Completed | XFE-15 |
 | T12 | Escena Enemy animada | M4 | Not started | XFE-16 |
 | T13 | Patrulla del enemigo | M4 | Not started | XFE-17 |
 | T14 | Contacto con el enemigo y derrota | M4 | Not started | XFE-18 |
@@ -129,5 +129,14 @@ Plantilla (la copio a cada tarea cuando la empiezo):
 - **Qué implementé:** `scripts/coin.gd` en la raíz de `coin.tscn`, con `_on_body_entered` conectado por el editor, comprobación de grupo `player` y `queue_free()`. Jugador en el grupo `player`. `Coin` en la capa 4 (`pickup`) con mask a la capa 2 (`player`).
 - **Dificultades:** las monedas no desaparecían porque el grupo `player` no se había guardado en `player.tscn`; el `if` siempre era falso.
 - **Notas de revisión:** verificado juntos: cada moneda desaparece al tocarla y las paredes no la activan. Los enemigos aún no existen, pero la mask ya los excluye.
+
+### T11 — Contador de monedas y HUD
+- **Estado:** Completed
+- **Linear:** XFE-15
+- **Fechas:** 2026-10-11 / 2026-10-11
+- **Qué aprendí:** señales personalizadas (`signal` y `.emit()`); conectar señales por código con `connect()` pasando el método sin paréntesis; `CanvasLayer` para una UI fija respecto a la cámara; grupos como registro (`get_nodes_in_group`) para contar el total; "call down, signal up": la moneda avisa, `Level` cuenta y coordina, el HUD solo muestra.
+- **Qué implementé:** `hud.tscn` (`CanvasLayer` + `Label`) con `hud.gd` y `update_counter(collected, total)`. Señal `coin_collected` en `coin.gd`, emitida antes de `queue_free()`. `level.gd` cuenta el total en `_ready()`, conecta la señal de cada moneda del grupo `coins` y actualiza el HUD con "x / total".
+- **Dificultades:** conectar la señal por código. Tuve que entender que `connect()` recibe un método de este script, no el de la moneda, y que va sin paréntesis. También un typo en el tipo del `Array`.
+- **Notas de revisión:** verificado juntos: el HUD muestra `0 / 4` al inicio y sube hasta `4 / 4`. Pendientes opcionales: `class_name` en `Coin` y `HUD` para quitar avisos de acceso inseguro, y unificar el texto del HUD.
 
 *(Las secciones de las demás tareas se añaden al empezar cada una.)*

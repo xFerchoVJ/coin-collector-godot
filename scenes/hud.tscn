@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://df45nl21mi3br"]
+
+[ext_resource type="Script" uid="uid://x7fcc2jn4y0j" path="res://scripts/hud.gd" id="1_ahhtf"]
+
+[node name="HUD" type="CanvasLayer" unique_id=2056937295]
+script = ExtResource("1_ahhtf")
+
+[node name="Label" type="Label" parent="." unique_id=1611739691]
+offset_right = 33.0
+offset_bottom = 13.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "0 / 4 monedas recolectadas"
+horizontal_alignment = 1

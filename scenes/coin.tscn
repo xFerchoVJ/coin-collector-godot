@@ -42,7 +42,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dtglo"]
 size = Vector2(6, 6)
 
-[node name="Coin" type="Area2D" unique_id=1201971875]
+[node name="Coin" type="Area2D" unique_id=1201971875 groups=["coins"]]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_i64fm")
